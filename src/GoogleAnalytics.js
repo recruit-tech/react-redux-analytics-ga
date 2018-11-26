@@ -4,7 +4,7 @@ import { pickBy } from 'lodash/fp'
 import defaultConfig from './default.config.js'
 import { composeLocationString } from './utils'
 import { 
-  configKeyTd,
+  configKeyGa,
   debugNamespace,
   errorNamespace,
   TYPE_EVENT,

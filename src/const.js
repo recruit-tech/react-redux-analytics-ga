@@ -1,4 +1,4 @@
-export const configKeyTd = 'ga'
+export const configKeyGa = 'ga'
 const namespace = 'analytics-ga'
 export const debugNamespace = namespace+':debug'
 export const errorNamespace = namespace+':error'
