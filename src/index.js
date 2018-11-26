@@ -1,1 +1,2 @@
-export { default as treasureMiddleware } from './treasureMiddleware'
+export { default as googleAnalyticsMiddleware.js } from './googleAnalyticsMiddleware.js'
+
