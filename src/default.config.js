@@ -16,10 +16,8 @@ export default {
     showQuery: true,
     showHash: true,
   },
-  td: {
-    database: 'SET_YOUR_DATABASE_NAME',
-    writeKey: 'SET_YOUR_WRITE_KEY',
-    host: 'in.treasuredata.com',
-    pathname: '/js/v3/event/',
+  ga: {
+    trackingId: 'SET_YOUR_TRACKING_ID -- e.g UA-xxxxxxxxx-x'
   }
 }
+
