@@ -15,14 +15,14 @@ const debug = debugFactory(debugNamespace)
 const error = debugFactory(errorNamespace)
 
 /**
- *  Treasure Data Javascript SDK wrapper
+ *  Google Analytics Javascript SDK wrapper
  */
- export default class Treasure{
+ export default class GoogleAnalytics {
   constructor({
     config = {},
   }) {
     if(!isBrowser){
-      error('td-js-sdk cannot be used outside browser!')
+      error('react-ga cannot be used outside browser!')
       return
     }
     //state initialization
@@ -32,12 +32,12 @@ const error = debugFactory(errorNamespace)
     this.config = this.mergeConfig(defaultConfig, config)
     this.debugLogConfig()
 
-    //instantiate tdk-js-sdk
-    const tdConfig = this.config[configKeyTd]
-    const TdJsSdk = require('td-js-sdk')
-    this.td = new TdJsSdk(tdConfig)
-    debug('initialized td-js-sdk with following config')
-    debug(tdConfig)
+    //instantiate react-ga
+    const gaConfig = this.config[configKeyGa]
+    const ReactGA = require('react-ga')
+    this.ga = new ReactGA(gaConfig)
+    debug('initialized react-ga with following config')
+    debug(gaConfig)
 
     //helpers
     this.composeLocation = this.config.urlFormat ? 
@@ -78,7 +78,7 @@ const error = debugFactory(errorNamespace)
     this.config.dryRun && debug(`***** working in dry-run mode (track will not be sent) *****`)
     debug(`page view track will be recored in '${this.config.pageViewTable}' table`)
     debug(`event track will be recored in '${this.config.eventTable}' table`)
-    debug(`td_* values will${this.config.sendTdValues ? '' : ' NOT' } be merged`)
+    debug(`ga_* values will${this.config.sendTdValues ? '' : ' NOT' } be merged`)
     debug(`falsy values in variables will ${this.config.sendFalsyValues ? 'be sent' : 'be omitted'}`)
     debug(`track type will be set to '${this.config.trackTypeKey}' key`)
     this.config.sendReferrer && debug(`referrer will be set to '${this.config.referrerKey}' key`)
@@ -131,10 +131,10 @@ const error = debugFactory(errorNamespace)
       const errorCallback = (e) => {
         reject(e)
       }
-      if(this.config.sendTdValues){
-        this.td.trackEvent(table, variables, successCallback, errorCallback)
+      if(this.config.sendGaValues){
+        this.ga.trackEvent(table, variables, successCallback, errorCallback)
       }else{
-        this.td.addRecord(table, variables, successCallback, errorCallback)
+        this.ga.addRecord(table, variables, successCallback, errorCallback)
       }
     })
   }
