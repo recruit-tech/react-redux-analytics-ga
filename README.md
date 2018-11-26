@@ -1,1 +1,1 @@
-TreasureData plugin for react-redux-analytics
+Google Analytics plugin for react-redux-analytics
