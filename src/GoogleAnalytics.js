@@ -96,7 +96,7 @@ const error = debugFactory(errorNamespace)
     }
     const composedVars = this.composeVariables({ variables, type: TYPE_PAGEVIEW})
     try {
-      await this.track(TYPE_PAGEVIEW, composedVars)
+      await this.ga.pageview(composedVars)
       debug(`${this.config.dryRun ? '(dry-run)': '(tracked)'} pageview: ${JSON.stringify(composedVars)}`)
     }catch(e){
       error(`failed to send event track to the server: ${JSON.stringify(e)}`)
@@ -107,36 +107,12 @@ const error = debugFactory(errorNamespace)
   async sendEvent({ variables, eventName }){
     const composedVars = this.composeVariables({ variables, eventName, type: TYPE_EVENT })
     try{
-      await this.track(TYPE_EVENT, composedVars)
+      await this.ga.event(composedVars)
       debug(`${this.config.dryRun ? '(dry-run)': '(tracked)'} event(${eventName}): ${JSON.stringify(composedVars)}`)
     }catch(e){
       error(`failed to send event track to the server: ${JSON.stringify(e)}`)
       throw e
     }
-  }
-
-  async track(type, variables){
-    return new Promise((resolve, reject) => {
-      if(this.config.dryRun){
-        resolve({ dry: true })
-        return
-      }
-      const table = this.getTableName(type)
-      if(!table){
-        reject('Table name must be supplied.')
-      }
-      const successCallback = (ret) => {
-        resolve(ret)
-      }
-      const errorCallback = (e) => {
-        reject(e)
-      }
-      if(this.config.sendGaValues){
-        this.ga.trackEvent(table, variables, successCallback, errorCallback)
-      }else{
-        this.ga.addRecord(table, variables, successCallback, errorCallback)
-      }
-    })
   }
 
   //protected:
