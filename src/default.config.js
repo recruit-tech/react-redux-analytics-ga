@@ -17,7 +17,7 @@ export default {
     showHash: true,
   },
   ga: {
-    trackingId: 'SET_YOUR_TRACKING_ID -- e.g UA-xxxxxxxxx-x'
+    trackingId: 'UA-xxxxxxxxx-x'
   }
 }
 

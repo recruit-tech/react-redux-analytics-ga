@@ -48,7 +48,7 @@ export default ({
         })
         break
       case FALLBACK_PAGEVIEW:
-        td.sendPageView({
+        ga.sendPageView({
           location: payload.location,
           variables: { ...filterVars(payload.variables), fallbackPageView: true},
         })
