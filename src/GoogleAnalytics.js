@@ -49,9 +49,9 @@ const error = debugFactory(errorNamespace)
     return {
       ...defaultConfig,
       ...config,
-      [configKeyTd]: {
-        ...defaultConfig[configKeyTd],
-        ...config[configKeyTd],
+      [configKeyGa]: {
+        ...defaultConfig[configKeyGa],
+        ...config[configKeyGa],
       },
     }
   }
