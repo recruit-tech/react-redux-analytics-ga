@@ -95,7 +95,7 @@ const error = debugFactory(errorNamespace)
     }
     const composedVars = this.composeVariables({ variables, type: TYPE_PAGEVIEW})
     try {
-      await this.ga.pageview(composedVars)
+      await this.ga.pageview(location)
       debug(`${this.config.dryRun ? '(dry-run)': '(tracked)'} pageview: ${JSON.stringify(composedVars)}`)
     }catch(e){
       error(`failed to send event track to the server: ${JSON.stringify(e)}`)
@@ -106,7 +106,7 @@ const error = debugFactory(errorNamespace)
   async sendEvent({ variables, eventName }){
     const composedVars = this.composeVariables({ variables, eventName, type: TYPE_EVENT })
     try{
-      await this.ga.event(composedVars)
+      await this.ga.event(eventName)
       debug(`${this.config.dryRun ? '(dry-run)': '(tracked)'} event(${eventName}): ${JSON.stringify(composedVars)}`)
     }catch(e){
       error(`failed to send event track to the server: ${JSON.stringify(e)}`)
