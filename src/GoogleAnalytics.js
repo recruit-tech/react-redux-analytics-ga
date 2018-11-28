@@ -35,7 +35,7 @@ const error = debugFactory(errorNamespace)
     //instantiate react-ga
     const gaConfig = this.config[configKeyGa]
     const ReactGA = require('react-ga')
-    this.ga = ReactGA.initialize(gaConfig)
+    ReactGA.initialize(gaConfig)
     debug('initialized react-ga with following config')
     debug(gaConfig)
 
@@ -95,7 +95,7 @@ const error = debugFactory(errorNamespace)
     }
     const composedVars = this.composeVariables({ variables, type: TYPE_PAGEVIEW})
     try {
-      this.ga.pageview(location)
+      ReactGA.pageview(location)
       debug(`${this.config.dryRun ? '(dry-run)': '(tracked)'} pageview: ${JSON.stringify(composedVars)}`)
     }catch(e){
       error(`failed to send event track to the server: ${JSON.stringify(e)}`)
@@ -106,7 +106,7 @@ const error = debugFactory(errorNamespace)
   async sendEvent({ variables, eventName }){
     const composedVars = this.composeVariables({ variables, eventName, type: TYPE_EVENT })
     try{
-      this.ga.event(composedVars)
+      ReactGA.event(composedVars)
       debug(`${this.config.dryRun ? '(dry-run)': '(tracked)'} event(${eventName}): ${JSON.stringify(composedVars)}`)
     }catch(e){
       error(`failed to send event track to the server: ${JSON.stringify(e)}`)
