@@ -36,7 +36,7 @@ export default ({
     const { type, payload } = action
     switch (type){
       case SEND_PAGE_VIEW:
-        filterPageView(action) && ga.sendPageView({
+        ga.sendPageView({
           location: payload.location,
           variables: filterVars(payload.variables),
         })
