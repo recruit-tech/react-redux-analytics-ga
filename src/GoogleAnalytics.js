@@ -3,6 +3,7 @@ import isBrowser from 'is-in-browser';
 import { pickBy } from 'lodash/fp'
 import defaultConfig from './default.config.js'
 import { composeLocationString } from './utils'
+import * as reactGA from 'react-ga'
 import { 
   configKeyGa,
   debugNamespace,
@@ -34,9 +35,8 @@ const error = debugFactory(errorNamespace)
 
     //instantiate react-ga
     const gaConfig = this.config[configKeyGa]
-    const ReactGA = require('react-ga')
-    ReactGA.initialize(gaConfig)
-    this.ga = ReactGA.ga()
+    this.reactGA = reactGA;
+    this.reactGA.initialize(gaConfig);
     debug('initialized react-ga with following config')
     debug(gaConfig)
 
@@ -96,7 +96,10 @@ const error = debugFactory(errorNamespace)
     }
     const composedVars = this.composeVariables({ variables, type: TYPE_PAGEVIEW})
     try {
-      this.ga('send', 'pageview', location) //FIXME
+      if (location != null) {
+        this.reactGA.set({ page: location.pathname + location.search })
+      }
+      this.reactGA.ga('send', 'pageview');
       debug(`${this.config.dryRun ? '(dry-run)': '(tracked)'} pageview: ${JSON.stringify(composedVars)}`)
     }catch(e){
       error(`failed to send event track to the server: ${JSON.stringify(e)}`)
