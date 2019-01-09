@@ -88,7 +88,7 @@ const error = debugFactory(errorNamespace)
     debug(`config set: ${JSON.stringify(this.config)}`)
   }
 
-  async sendPageView({location, variables}){
+  sendPageView({location, variables}){
     if (this.isFirstPageView) {
       this.firstPage({location})
     }else{
@@ -107,7 +107,7 @@ const error = debugFactory(errorNamespace)
     }
   }
 
-  async sendEvent({ variables, eventName }){
+  sendEvent({ variables, eventName }){
     const composedVars = this.composeVariables({ variables, eventName, type: TYPE_EVENT })
     try{
       this.ga('send', 'event', composedVars) //FIXME
