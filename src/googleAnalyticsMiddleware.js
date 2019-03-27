@@ -1,5 +1,4 @@
 import { SEND_PAGE_VIEW, SEND_EVENT, FALLBACK_PAGEVIEW } from 'react-redux-analytics'
-import { default as analyticsMiddleware } from 'react-redux-analytics'
 import isBrowser from 'is-in-browser';
 import debugFactory from 'debug'
 import { debugNamespace, errorNamespace } from './const'
@@ -36,15 +35,16 @@ export default ({
     const { type, payload } = action
     switch (type){
       case SEND_PAGE_VIEW:
+        // TODO(kani) filterVars使ってないので消す
         ga.sendPageView({
           location: payload.location,
           variables: filterVars(payload.variables),
         })
         break
       case SEND_EVENT:
-        filterEvent(action) && ga.sendEvent({
-          eventName: payload.eventName,
-          variables: filterVars(payload.variables),
+        ga.sendEvent({
+          eventName: payload.eventName || 'event',
+          variables: payload.variables, 
         })
         break
       case FALLBACK_PAGEVIEW:

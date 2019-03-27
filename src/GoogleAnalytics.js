@@ -12,6 +12,7 @@ import {
   TYPE_PAGEVIEW,
 } from './const'
 
+// TODO(kani) debug, error消す
 const debug = debugFactory(debugNamespace)
 const error = debugFactory(errorNamespace)
 
@@ -20,7 +21,7 @@ const error = debugFactory(errorNamespace)
  */
  export default class GoogleAnalytics {
   constructor({
-    config = {},
+    config = {}, // TODO(kani) config.configになるのでちょっと考えたい
   }) {
     if(!isBrowser){
       error('react-ga cannot be used outside browser!')
@@ -35,6 +36,7 @@ const error = debugFactory(errorNamespace)
 
     //instantiate react-ga
     const gaConfig = this.config[configKeyGa]
+    // TODO(kani) reactGAをthisに入れる必要なさそう
     this.reactGA = reactGA;
     this.reactGA.initialize(gaConfig);
     debug('initialized react-ga with following config')
@@ -107,11 +109,10 @@ const error = debugFactory(errorNamespace)
     }
   }
 
-  sendEvent({ variables, eventName }){
-    const composedVars = this.composeVariables({ variables, eventName, type: TYPE_EVENT })
+  sendEvent({eventName, variables}){
     try{
-      this.ga('send', 'event', composedVars) //FIXME
-      debug(`${this.config.dryRun ? '(dry-run)': '(tracked)'} event(${eventName}): ${JSON.stringify(composedVars)}`)
+      this.reactGA[eventName](variables);
+      debug(`${this.config.dryRun ? '(dry-run)': '(tracked)'} event(${eventName})`)
     }catch(e){
       error(`failed to send event track to the server: ${JSON.stringify(e)}`)
       throw e
@@ -129,6 +130,7 @@ const error = debugFactory(errorNamespace)
     return null
   }
 
+  // TODO(kani) 何をもらって何を返す関数か書きたい
   //protected:
   composeVariables({ variables, eventName, type }) {
     const composed = { ...variables } 
