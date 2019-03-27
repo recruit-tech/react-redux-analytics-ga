@@ -1,6 +1,6 @@
 {
   "name": "@recruit-tech/react-redux-analytics-ga",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Google Analytics plugin for react-redux-analytics",
   "main": "lib/index.js",
   "keywords": [
