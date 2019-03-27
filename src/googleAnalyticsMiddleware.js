@@ -1,57 +1,36 @@
 import { SEND_PAGE_VIEW, SEND_EVENT, FALLBACK_PAGEVIEW } from 'react-redux-analytics'
-import isBrowser from 'is-in-browser';
-import debugFactory from 'debug'
-import { debugNamespace, errorNamespace } from './const'
+import isBrowser from 'is-in-browser'
 import GoogleAnalytics from './GoogleAnalytics'
-import { filterVariables, filterAction } from './filters'
 
-const debug = debugFactory(debugNamespace)
-const error = debugFactory(errorNamespace)
-
-export default ({
-   config,
-   variablesFilter = null,
-   pageViewFilter = null,
-   eventFilter = null,
-   debug = false,
-  }) => {
-
-  if(!isBrowser){
-    return ({ dispatch, getState }) => (next) => (action) => {
-      error('googleAnalyticsMiddleware does not work at server side')
+export default (config) => {
+  if (!isBrowser) {
+    return () => next => (action) => {
       return next(action)
     }
   }
-  const ga = new GoogleAnalytics({ config })
-  const filterVars = filterVariables(variablesFilter)
-  const filterPageView = filterAction('pageview')(pageViewFilter)
-  const filterEvent = filterAction('event')(eventFilter)
+  const ga = new GoogleAnalytics(config)
 
-  if(debug){
-    window._ga = ga
-  }
-
-  return ({ dispatch, getState }) => (next) => (action) => {
+  return () => next => (action) => {
     const { type, payload } = action
-    switch (type){
+    switch (type) {
       case SEND_PAGE_VIEW:
-        // TODO(kani) filterVars使ってないので消す
         ga.sendPageView({
           location: payload.location,
-          variables: filterVars(payload.variables),
+          variables: payload.variables,
         })
         break
       case SEND_EVENT:
         ga.sendEvent({
           eventName: payload.eventName || 'event',
-          variables: payload.variables, 
+          variables: payload.variables,
         })
         break
       case FALLBACK_PAGEVIEW:
         ga.sendPageView({
           location: payload.location,
-          variables: { ...filterVars(payload.variables), fallbackPageView: true},
+          variables: { ...payload.variables, fallbackPageView: true },
         })
+        break
       default:
         break
     }

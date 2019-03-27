@@ -17,15 +17,14 @@
     "build": "babel src --out-dir lib",
     "watch": "babel src --out-dir lib --watch",
     "clean": "rimraf lib/*",
-    "lint": "eslint src",
+    "lint": "eslint src --cache",
+    "lint:fix": "eslint src --fix --cache",
     "version": "npm-run-all clean build"
   },
   "author": "Recruit Technologies Co.,Ltd.",
   "license": "MIT",
   "dependencies": {
-    "debug": "^2.2.0",
     "is-in-browser": "^1.1.3",
-    "lodash": "^4.17.11",
     "react": "^16.8.4",
     "react-ga": "^2.5.5-0",
     "react-redux-analytics": "^0.1.3"
