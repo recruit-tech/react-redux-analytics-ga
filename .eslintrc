@@ -1,33 +1,22 @@
 {
   "root": true,
+  "extends": [
+    "eslint-config-airbnb"
+  ],
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module"
   },
+  "globals": {
+    "window": true
+  },
   "parser": "babel-eslint",
-
   "rules": {
-    // React
-    "react/no-danger": "off",
-    "react/no-deprecated": "off",
-    "react/no-did-mount-set-state": "off",
-    "react/no-did-update-set-state": "off",
-    "react/no-direct-mutation-state": "off",
-    "react/no-is-mounted": "off",
-    "react/no-set-state": "off",
-    "react/no-string-refs": "off",
-    "react/require-extension": "off",
-    "react/wrap-multilines": "off",
-
-    // JSX
-    "react/jsx-equals-spacing": "off",
-    //"react/jsx-indent": ["error", 2],
-    "react/jsx-key": "off",
-    "react/jsx-max-props-per-line": "off",
-    "react/jsx-no-duplicate-props": "off",
-    "react/jsx-space-before-closing": "off",
-
-    // dependencies
+    "semi": [
+      2,
+      "never"
+    ],
+    "import/prefer-default-export": "off",
     "dependencies/no-unresolved": "off"
   }
 }
