@@ -4,9 +4,7 @@ import GoogleAnalytics from './GoogleAnalytics'
 
 export default (config) => {
   if (!isBrowser) {
-    return () => next => (action) => {
-      return next(action)
-    }
+    return () => next => action => next(action)
   }
   const ga = new GoogleAnalytics(config)
 
